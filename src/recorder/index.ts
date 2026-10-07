@@ -1,6 +1,6 @@
 "use client";
 
-import { record, type eventWithTime } from "@rrweb/record";
+import { record } from "@rrweb/record";
 import { NetworkRecorder } from "@/recorder/network";
 import { sha256Hex, canonicalize } from "@/sessions/integrity";
 import { sanitize } from "@/privacy/sanitizer";
@@ -14,7 +14,7 @@ export interface RecorderOptions {
 
 export class SessionRecorder {
   private stopFn: (() => void) | null = null;
-  private events: eventWithTime[] = [];
+  private events: unknown[] = [];
   private net = new NetworkRecorder();
   private startedAt = 0;
   private allAudit: PrivacyAuditEntry[] = [];
@@ -31,10 +31,10 @@ export class SessionRecorder {
     this.net = new NetworkRecorder();
     this.net.start();
 
-    this.stopFn = record({
+    const handle = record({
       emit: (e) => {
         const { sanitized, audit } = sanitize(e);
-        this.events.push(sanitized as eventWithTime);
+        this.events.push(sanitized);
         if (audit.length) this.allAudit.push(...audit);
       },
       maskAllInputs: true,
@@ -43,6 +43,13 @@ export class SessionRecorder {
       recordCanvas: false,
       collectFonts: false,
     });
+
+    this.stopFn =
+      typeof handle === "function"
+        ? (handle as () => void)
+        : () => {
+            /* no-op if record returns undefined */
+          };
   }
 
   stop(): SessionPackage {
