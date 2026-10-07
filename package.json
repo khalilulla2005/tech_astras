@@ -9,9 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@rrweb/record": "^2.1.7",
+    "@rrweb/replay": "^2.1.7",
     "next": "16.4.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
