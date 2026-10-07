@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { CartBadge } from "@/components/demo/CartBadge";
+import { RecordBar } from "@/components/demo/RecordBar";
 
 export default function DemoLayout({ children }: { children: ReactNode }) {
   return (
@@ -11,17 +12,29 @@ export default function DemoLayout({ children }: { children: ReactNode }) {
             <Link href="/demo" className="font-semibold">
               Demo Store
             </Link>
-            <Link href="/demo/products" className="text-neutral-300 hover:text-white">
+            <Link
+              href="/demo/products"
+              className="text-neutral-300 hover:text-white"
+            >
               Products
             </Link>
-            <Link href="/demo/cart" className="text-neutral-300 hover:text-white">
+            <Link
+              href="/demo/cart"
+              className="text-neutral-300 hover:text-white"
+            >
               Cart
             </Link>
-            <Link href="/demo/checkout" className="text-neutral-300 hover:text-white">
+            <Link
+              href="/demo/checkout"
+              className="text-neutral-300 hover:text-white"
+            >
               Checkout
             </Link>
           </nav>
-          <CartBadge />
+          <div className="flex items-center gap-3">
+            <RecordBar />
+            <CartBadge />
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-5xl px-4 py-6">{children}</main>

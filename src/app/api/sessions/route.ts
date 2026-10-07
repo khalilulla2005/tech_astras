@@ -24,11 +24,15 @@ export async function POST(req: Request) {
     );
   }
 
-  const pkg = parsed.data;
-  const hash = await sha256Hex(canonicalize(pkg));
+  // Always hash the package WITHOUT the integrity field so save and
+  // verify compute the same digest.
+  const pkgWithoutIntegrity = { ...parsed.data, integrity: null };
+  const hash = await sha256Hex(canonicalize(pkgWithoutIntegrity));
+
   await saveSession({
-    ...pkg,
+    ...parsed.data,
     integrity: { algorithm: "SHA-256" as const, hash },
   });
-  return NextResponse.json({ sessionId: pkg.sessionId, hash });
+
+  return NextResponse.json({ sessionId: parsed.data.sessionId, hash });
 }
