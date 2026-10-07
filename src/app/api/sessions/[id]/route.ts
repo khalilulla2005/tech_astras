@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { loadSession } from "@/sessions/storage";
 import { sha256Hex, canonicalize } from "@/sessions/integrity";
 
-export const runtime = "nodejs";
-
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },

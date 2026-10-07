@@ -3,8 +3,6 @@ import { saveSession, listSessions } from "@/sessions/storage";
 import { SessionPackageSchema } from "@/types/recording";
 import { sha256Hex, canonicalize } from "@/sessions/integrity";
 
-export const runtime = "nodejs";
-
 export async function GET() {
   const sessions = await listSessions();
   return NextResponse.json({ sessions });
