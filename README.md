@@ -1,6 +1,6 @@
 # Deterministic Replay Platform
 
-![Home page](docs/images/home.png)
+![Home page](docs/images/app-home.png)
 
 A local-first research prototype for recording, replaying, verifying, and
 certifying a supported class of browser sessions.
